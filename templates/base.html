@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{% url 'accounts:signup' %}">signup</a>
+    <a href="{% url 'accounts:login' %}">login</a>
+    <a href="{% url 'accounts:logout' %}">logout</a>
     {% block body %}
     {% endblock %}
 </body>
