@@ -26,7 +26,11 @@ def login(request):
         form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('articles:index')
+            #경로 2개 -> 정상적 로그인 경로 & 튕겨서 로그인으로 들어오는 경로(next 인자 있음)
+            next_url = request.GET.get('next')
+            # next 인자에 url 없을때 : None or 'articles:index'
+            # next 인자에 url 있을때 : /articles/1/ or 'articles:index'
+            return redirect(next_url or 'articles:index')
     else:
         form = CustomAuthenticationForm()
 
