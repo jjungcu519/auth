@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import CustomCreationForm, CustomAuthenticationForm
 from django.contrib.auth import login as auth_login
 # 장고 내 구현된 기능과 변수의 이름을 다르게 표기해준다.
+from django.contrib.auth import logout as auth_logout
 
 def signup(request):
     # 요건 뭐지
@@ -34,3 +35,8 @@ def login(request):
     }
 
     return render(request, 'login.html', context)
+
+def logout(request):
+    auth_logout(request)
+
+    return redirect('accounts:login')
