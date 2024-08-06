@@ -1,3 +1,36 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import CustomCreationForm, CustomAuthenticationForm
+from django.contrib.auth import login as auth_login
+# 장고 내 구현된 기능과 변수의 이름을 다르게 표기해준다.
 
-# Create your views here.
+def signup(request):
+    # 요건 뭐지
+    if request.method == 'POST':
+        form = CustomCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:signup')
+    #get 요청이 들어왔을때    
+    else:
+        form = CustomCreationForm()
+    
+    context = {
+        'form' : form,
+    }
+    
+    return render(request, 'signup.html', context)
+
+def login(request):
+    if request.method =='POST':
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('accounts:login')
+    else:
+        form = CustomAuthenticationForm()
+
+    context = {
+        'form' : form
+    }
+
+    return render(request, 'login.html', context)
